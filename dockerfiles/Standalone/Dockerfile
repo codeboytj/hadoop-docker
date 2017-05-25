@@ -26,3 +26,15 @@ RUN tar -xf hadoop-2.7.3.tar.gz
 RUN rm hadoop-2.7.3.tar.gz
 # 修改etc/hadoop/hadoop-env.sh，在最后一行加入正确的JAVA_HOME参数
 RUN echo "export="$JAVA_HOME >> hadoop-2.7.3/etc/hadoop/hadoop-env.sh
+
+
+# hbase单击模式安装
+# 下载hbase
+# 使用-q启用安静模式下载，不打印下载进度，使用-O指定文件下载位置及文件名
+RUN wget -q http://mirror.bit.edu.cn/apache/hbase/stable/hbase-1.2.5-bin.tar.gz
+# 解压hbase
+RUN tar -xf hbase-1.2.5-bin.tar.gz
+# 删除压缩包
+RUN rm hbase-1.2.5-bin.tar.gz
+# 修改conf/hbase-env.sh，在最后一行加入正确的JAVA_HOME参数
+RUN echo "export="$JAVA_HOME >> hbase-1.2.5/conf/hbase-env.sh
