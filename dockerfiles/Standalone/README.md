@@ -38,7 +38,7 @@ root@c4ebb472ad6b:/usr/local/hadoop-2.7.3# mkdir input ; \
 
 ### 运行容器
 
-要运行自己编写的WordCount，需要将jar文件以及输入文件放到容器内部，通过-v参数实现
+要运行自己编写的[WordCount](https://github.com/codeboytj/hadoop-mapreduce-learn/blob/master/src/main/java/cumt/tj/learn/WordCount.java)，需要将jar文件以及输入文件放到容器内部，通过-v参数实现
 
 ```
 sudo docker run -it --rm -v /home/sky/IdeaProjects/hadoop-mapreduce-learn/inputs:/usr/local/hadoop-2.7.3/inputs -v /home/sky/IdeaProjects/hadoop-mapreduce-learn/build/libs/hadoop-mapreduce-1.0-SNAPSHOT.jar:/usr/local/hadoop-2.7.3/wc.jar --name standalone-hadoop 768
