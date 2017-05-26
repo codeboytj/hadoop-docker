@@ -10,7 +10,7 @@ hadoop默认的就是单机模式，这个模式不需要配置ssh之类的
 sudo docker build -t hadoop-standalone:0.02 .
 ```
 
-## 运行容器
+## 测试运行容器
 
 创建镜像之后，输入运行命令,运行名为standalone-hadoop的容器：
 
@@ -29,6 +29,35 @@ root@c4ebb472ad6b:/usr/local/hadoop-2.7.3# mkdir input ; \
 ```
 
 从输出中可以看出，例子程序运行成功
+
+## 运行自己编写的WordCount
+
+1. 编译并生成jar文件
+2. 运行容器
+3. 利用hadoop运行WordCount
+
+### 运行容器
+
+要运行自己编写的WordCount，需要将jar文件以及输入文件放到容器内部，通过-v参数实现
+
+```
+sudo docker run -it --rm -v /home/sky/IdeaProjects/hadoop-mapreduce-learn/inputs:/usr/local/hadoop-2.7.3/inputs -v /home/sky/IdeaProjects/hadoop-mapreduce-learn/build/libs/hadoop-mapreduce-1.0-SNAPSHOT.jar:/usr/local/hadoop-2.7.3/wc.jar --name standalone-hadoop 768
+```
+
+其中，各项的含义如下：
+
+- -v /home/sky/IdeaProjects/hadoop-mapreduce-learn/inputs:/usr/local/hadoop-2.7.3/inputs  将IDE中写好的输入文件夹映射到容器中的/usr/local/hadoop-2.7.3/inputs，以便处理
+- -v /home/sky/IdeaProjects/hadoop-mapreduce-learn/build/libs/hadoop-mapreduce-1.0-SNAPSHOT.jar:/usr/local/hadoop-2.7.3/wc.jar  将IDE生成的jar文件映射到容器中的/usr/local/hadoop-2.7.3/文件夹，并重命名为wc.jar
+- 768 镜像文件的id
+
+### 利用hadoop运行WordCount
+
+```
+cd hadoop-2.7.3
+bin/hadoop jar wc.jar cumt/tj/learn/WordCount ./inputs/wordCountInput/testWordCount.txt outputs/wordCount/
+```
+
+运行命令需要指定执行的类为cumt.tj.learn.WordCount，结果输出到outputs/wordCount/。运行成功后，可以使用cat命令查看输出结果
 
 ## 离开容器
 
