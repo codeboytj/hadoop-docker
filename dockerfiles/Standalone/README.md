@@ -59,6 +59,24 @@ bin/hadoop jar wc.jar cumt/tj/learn/WordCount ./inputs/wordCountInput/testWordCo
 
 运行命令需要指定执行的类为cumt.tj.learn.WordCount，结果输出到outputs/wordCount/。运行成功后，可以使用cat命令查看输出结果
 
+## hbase相关操作
+
+### 运行容器
+
+```
+sudo docker run -it --rm -v /home/sky/hadoop-data:/usr/local/hadoop-data --name standalone-hadoop -p 16010:16010 registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-standalone:0.2
+```
+
+其中，各项的含义如下：
+
+- -v /home/sky/hadoop-data/hbase:/usr/local/hadoop-data/hbase，hbase的写入数据的文件夹，容器中的/usr/local/hadoop-data/hbase映射到本机的/home/sky/hadoop-data/hbase。
+- -v /home/sky/hadoop-data/zookeeper:/usr/local/hadoop-data/zookeeper，zookeeper的写入数据的文件夹，容器中的/usr/local/hadoop-data/zookeeper映射到本机的/home/sky/hadoop-data/zookeeper，hbase与zookeeper写入文件夹的配置都是在conf/hbase-site.xml中配置的。
+- -p 16010:16010，容器内16010端口映射到本机的16010，这样就可以在容器内的hbase启动之后，通过浏览器打开“http://localhost:16010”查看hbase的状态
+
+### hbase shell命令操作
+
+这样就可以在容器内运行[hbase简单命令](http://hbase.apache.org/book.html#quickstart)
+
 ## 离开容器
 
 使用shell命令离开容器：
