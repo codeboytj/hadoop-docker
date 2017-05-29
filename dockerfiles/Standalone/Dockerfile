@@ -40,3 +40,7 @@ RUN tar -xf hbase-1.2.5-bin.tar.gz
 RUN rm hbase-1.2.5-bin.tar.gz
 # 修改conf/hbase-env.sh，在最后一行加入正确的JAVA_HOME参数
 RUN echo "export="$JAVA_HOME >> hbase-1.2.5/conf/hbase-env.sh
+# 修改配置文件conf/hbase-site.xml，指定hbase与zookeeper存储数据的本地文件系统中位置
+# 根据配置文件，数据存储在/usr/local/hadoop-data/hbase,/usr/local/hadoop-data/zookeeper
+RUN mkdir hadoop-data
+COPY hbase-site.xml hbase-1.2.5/conf
