@@ -77,6 +77,22 @@ sudo docker run -it --rm -v /home/sky/hadoop-data:/usr/local/hadoop-data --name 
 
 这样就可以在容器内运行[hbase简单命令](http://hbase.apache.org/book.html#quickstart)
 
+### hbase与mapreduce
+
+#### 运行内置的RowCounter
+
+运行HBase内置的RowCounter，它通过mapreduce计算刚刚使用hbase shell命令创建的名为test的表有多少行
+
+```
+HADOOP_CLASSPATH=`/usr/local/hbase-1.2.5/bin/hbase classpath` ./hadoop-2.7.3/bin/hadoop jar ./hbase-1.2.5/lib/hbase-server-1.2.5.jar rowcounter test
+```
+这行命令中：
+
+- HADOOP_CLASSPATH=`/usr/local/hbase-1.2.5/bin/hbase classpath`，通过``运行shell子命令<br>
+```/usr/local/hbase-1.2.5/bin/hbase classpath```将shell命令中的输出指定为HADOOP_CLASSPATH，从而指定mapreduce程序RowCounter的HBase依赖
+
+运行完毕后，可以在控制台看到结果显示，test表中有3行
+
 ## 离开容器
 
 使用shell命令离开容器：
