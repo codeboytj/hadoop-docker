@@ -68,9 +68,7 @@ sudo docker run -it --rm -v /home/sky/hadoop-data:/usr/local/hadoop-data --name 
 ```
 
 其中，各项的含义如下：
-
-- -v /home/sky/hadoop-data/hbase:/usr/local/hadoop-data/hbase，hbase的写入数据的文件夹，容器中的/usr/local/hadoop-data/hbase映射到本机的/home/sky/hadoop-data/hbase。
-- -v /home/sky/hadoop-data/zookeeper:/usr/local/hadoop-data/zookeeper，zookeeper的写入数据的文件夹，容器中的/usr/local/hadoop-data/zookeeper映射到本机的/home/sky/hadoop-data/zookeeper，hbase与zookeeper写入文件夹的配置都是在conf/hbase-site.xml中配置的。
+- -v /home/sky/hadoop-data:/usr/local/hadoop-data 容器内hbase的配置文件hbase-site.xml指定了hbase以及zookeeper的写入文件夹为/usr/local/hadoop-data下面的hbase和zookeeper文件夹
 - -p 16010:16010，容器内16010端口映射到本机的16010，这样就可以在容器内的hbase启动之后，通过浏览器打开“http://localhost:16010”查看hbase的状态
 
 ### hbase shell命令操作
@@ -92,6 +90,29 @@ HADOOP_CLASSPATH=`/usr/local/hbase-1.2.5/bin/hbase classpath` ./hadoop-2.7.3/bin
 ```/usr/local/hbase-1.2.5/bin/hbase classpath```将shell命令中的输出指定为HADOOP_CLASSPATH，从而指定mapreduce程序RowCounter的HBase依赖
 
 运行完毕后，可以在控制台看到结果显示，test表中有3行
+
+#### 运行自己编写的[RowCount](https://github.com/codeboytj/hadoop-mapreduce-learn/blob/master/src/main/java/cumt/tj/learn/hbase/RowCounter.java)
+
+1. 导入自己的jar包
+2. 运行容器中的hbase，并建立test表
+3. 运行mapreduce程序
+
+##### 导入jar包
+
+要运行自己编写的RowCount，需要将自己的程序打包，然后通过"-v"参数映射到容器中，所以需要以如下的命令运行：
+
+
+```
+sudo docker run -it --rm -v /home/sky/IdeaProjects/hadoop-mapreduce-learn/build/libs/hadoop-mapreduce-1.0-SNAPSHOT.jar:/usr/local/hadoop-2.7.3/rc.jar -v /home/sky/hadoop-data:/usr/local/hadoop-data -p 16010:16010 --name standalone-hadoop 66b
+```
+
+##### 运行mapreduce程序
+
+```
+HADOOP_CLASSPATH=`/usr/local/hbase-1.2.5/bin/hbase classpath` ./hadoop-2.7.3/bin/hadoop jar ./hadoop-2.7.3/rc.jar cumt.tj.learn.hbase.RowCounter test
+```
+
+工作结束之后，可以看到test表中的行数为3
 
 ## 离开容器
 
