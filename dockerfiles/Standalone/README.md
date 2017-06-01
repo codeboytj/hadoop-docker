@@ -75,6 +75,31 @@ sudo docker run -it --rm -v /home/sky/hadoop-data:/usr/local/hadoop-data --name 
 
 这样就可以在容器内运行[hbase简单命令](http://hbase.apache.org/book.html#quickstart)
 
+### java操作hbase数据库
+
+#### 创建表格
+
+1. 导入自己的jar包
+2. 运行容器中的hbase
+3. 运行[java程序](https://github.com/codeboytj/hadoop-mapreduce-learn/blob/master/src/main/java/cumt/tj/learn/hbase/CreateHBaseTable.java)，创建test1表
+
+##### 导入jar包
+
+要运行自己编写的Java程序，需要将自己的程序打包，然后通过"-v"参数映射到容器中，所以需要以如下的命令运行：
+
+
+```
+sudo docker run -it --rm -v /home/sky/IdeaProjects/hadoop-mapreduce-learn/build/libs/hadoop-mapreduce-1.0-SNAPSHOT.jar:/usr/local/hadoop-2.7.3/cht.jar -v /home/sky/hadoop-data:/usr/local/hadoop-data -p 16010:16010 --name standalone-hadoop 66b
+```
+
+##### 运行Java程序
+
+```
+HADOOP_CLASSPATH=`/usr/local/hbase-1.2.5/bin/hbase classpath` ./hadoop-2.7.3/bin/hadoop jar ./hadoop-2.7.3/cht.jar cumt.tj.learn.hbase.CreateHBaseTable test1 cf1
+```
+
+从输出或者从http://localhost:16010可以看出test1表建立成功
+
 ### hbase与mapreduce
 
 #### 运行内置的RowCounter
