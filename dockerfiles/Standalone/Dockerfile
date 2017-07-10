@@ -44,3 +44,5 @@ RUN echo "export="$JAVA_HOME >> hbase-1.2.5/conf/hbase-env.sh
 # 根据配置文件，数据存储在/usr/local/hadoop-data/hbase,/usr/local/hadoop-data/zookeeper
 RUN mkdir hadoop-data
 COPY hbase-site.xml hbase-1.2.5/conf
+# 执行shell脚本
+CMD ["sh","./startup.sh"]
