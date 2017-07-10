@@ -33,16 +33,18 @@ RUN echo "export="$JAVA_HOME >> hadoop-2.7.3/etc/hadoop/hadoop-env.sh
 # hbase单击模式安装
 # 下载hbase
 # 使用-q启用安静模式下载，不打印下载进度，使用-O指定文件下载位置及文件名
-RUN wget -q http://mirror.bit.edu.cn/apache/hbase/stable/hbase-1.2.5-bin.tar.gz
+RUN wget -q http://mirror.bit.edu.cn/apache/hbase/stable/hbase-1.2.6-bin.tar.gz
 # 解压hbase
-RUN tar -xf hbase-1.2.5-bin.tar.gz
+RUN tar -xf hbase-1.2.6-bin.tar.gz
 # 删除压缩包
-RUN rm hbase-1.2.5-bin.tar.gz
+RUN rm hbase-1.2.6-bin.tar.gz
+# 建立链接
+RUN ln -s hbase-1.2.6 hbase
 # 修改conf/hbase-env.sh，在最后一行加入正确的JAVA_HOME参数
-RUN echo "export="$JAVA_HOME >> hbase-1.2.5/conf/hbase-env.sh
+RUN echo "export="$JAVA_HOME >> hbase/conf/hbase-env.sh
 # 修改配置文件conf/hbase-site.xml，指定hbase与zookeeper存储数据的本地文件系统中位置
 # 根据配置文件，数据存储在/usr/local/hadoop-data/hbase,/usr/local/hadoop-data/zookeeper
 RUN mkdir hadoop-data
-COPY hbase-site.xml hbase-1.2.5/conf
+COPY hbase-site.xml hbase/conf
 # 执行shell脚本
 CMD ["sh","./startup.sh"]
