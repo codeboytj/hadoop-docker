@@ -25,7 +25,7 @@ RUN tar -xf hadoop-2.7.3.tar.gz
 # 删除压缩包
 RUN rm hadoop-2.7.3.tar.gz
 # 修改etc/hadoop/hadoop-env.sh，在最后一行加入正确的JAVA_HOME参数
-RUN echo "export="$JAVA_HOME >> hadoop-2.7.3/etc/hadoop/hadoop-env.sh
+RUN echo "export JAVA_HOME="$JAVA_HOME >> hadoop-2.7.3/etc/hadoop/hadoop-env.sh
 
 # 使用阿里云的镜像作为apt下载地址
 # RUN sed '1i deb http://mirrors.aliyun.com/debian/ jessie main non-free contrib\ndeb http://mirrors.aliyun.com/debian/ jessie-proposed-updates main non-free contrib\ndeb-src http://mirrors.aliyun.com/debian/ jessie main non-free contrib\ndeb-src http://mirrors.aliyun.com/debian/ jessie-proposed-updates main non-free contrib' -i /etc/apt/sources.list
