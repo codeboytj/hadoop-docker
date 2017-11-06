@@ -34,6 +34,9 @@ RUN echo "export JAVA_HOME="$JAVA_HOME >> hadoop-2.7.4/etc/hadoop/hadoop-env.sh
 # 伪分布式配置
 COPY core-site.xml hadoop-2.7.4/etc/hadoop/
 COPY hdfs-site.xml hadoop-2.7.4/etc/hadoop/
+COPY mapred-site.xml hadoop-2.7.4/etc/hadoop/
+COPY yarn-site.xml hadoop-2.7.4/etc/hadoop/
+COPY start.sh hadoop-2.7.4/etc/hadoop/start.sh
 
 # 切换工作目录到/usr/local/hadoop-2.7.3
 WORKDIR /usr/local/hadoop-2.7.4
