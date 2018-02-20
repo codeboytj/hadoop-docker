@@ -1,4 +1,5 @@
 #!/bin/bash
-/etc/init.d/ssh start
+
+bin/hdfs namenode -format
 sbin/start-dfs.sh
 sbin/start-yarn.sh

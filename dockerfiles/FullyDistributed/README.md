@@ -1,37 +1,34 @@
-# 伪分布式模式使用说明
-
-伪分布式通过在一台机器上运行多个java进程实现，这个模式需要配置ssh之类的
-
-## 创建镜像
-
-在当前目录下，输入运行命令，创建名为hadoop-standalone，版本号为0.02的镜像：
+# 使用方法
 
 ```
-sudo docker build -t hadoop-pseudo-distributed:0.02 .
+docker pull registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
 ```
 
-## 运行容器
-
-创建镜像之后，输入运行命令,运行名为pseudo-distributed-hadoop的容器：
+## 启动容器
 
 ```
-sudo docker run -it --rm --name pseudo-distributed-hadoop hadoop-pseudo-distributed:0.02
+docker-compose up -d
 ```
 
-这样会进入到容器之中，默认工作目录为"/usr/local/hadoop-2.7.3",此时进入hadoop目录，运行hadoop官方文档的例子
+网段与[固定ip](http://www.jb51.net/article/118396.htm)的东东写在docker-compose.yml中的
+
+## 启动hdfs
+
+在namenode中进行文件系统格式化
+
+```
+bin/hdfs namenode -format
+```
+
+将namenode中的东西复制到datanode
+
+```
+  scp  -rq /usr/local/hadoop   datanode1:/usr/local
+  scp  -rq /usr/local/hadoop   datanode2:/usr/local
+```
+
+启动hdfs
 
 ```
 sbin/start-dfs.sh
 ```
-
-从输出中可以看出，例子程序运行成功
-
-## 离开容器
-
-使用shell命令离开容器：
-
-```
-exit
-```
-
-由于运行容器时设置了--rm参数，离开容器之后，容器会被自动删除，再次运行需要重新输入docker run命令运行
