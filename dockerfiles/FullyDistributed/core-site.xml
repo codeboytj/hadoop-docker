@@ -17,9 +17,8 @@
 <!-- Put site-specific property overrides in this file. -->
 
 <configuration>
-<!-- 伪分布式配置，参考url：http://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html -->
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://localhost:9000</value>
+        <value>hdfs://namenode:9000</value>
     </property>
 </configuration>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+/**
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<configuration>
+<!--
+设置hbase与zookeeper存储数据的位置，默认是写在/tmp下面，但是这个文件夹重启之后就没有了，所以要重新设置。
+不用自己手动新建~/hbase与~/zookeeper两个文件夹，hbase会自动建，如果手动新建的话，反而会使hbase重新找地方存储数据。
+-->
+  <property>
+    <name>hbase.rootdir</name>
+    <!-- file://表示本地文件系统，如果要使用分布式文件系统，需要指定相应位置，如：hdfs://namenode.example.org:8020/hbase -->
+    <value>file:///usr/local/hadoop-data/hbase</value>
+  </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/usr/local/hadoop-data/zookeeper</value>
+  </property>
+</configuration>
