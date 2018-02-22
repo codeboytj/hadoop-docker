@@ -2,7 +2,7 @@ version: "3"
 
 services:
   namenode:
-    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
+    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed:zookeeper
     networks:
       hdfs:
         ipv4_address: 172.19.0.2
@@ -21,7 +21,7 @@ services:
 
 
   datanode1:
-    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
+    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed:zookeeper
     networks:
       hdfs:
         ipv4_address: 172.19.0.3
@@ -36,7 +36,7 @@ services:
       - "datenode3:172.19.0.5"
 
   datanode2:
-    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
+    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed:zookeeper
     networks:
       hdfs:
         ipv4_address: 172.19.0.4
@@ -51,7 +51,7 @@ services:
       - "datenode3:172.19.0.5"
 
   datanode3:
-    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
+    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed:zookeeper
     networks:
       hdfs:
         ipv4_address: 172.19.0.5

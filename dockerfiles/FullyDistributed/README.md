@@ -32,3 +32,11 @@ bin/hdfs namenode -format
 ```
 sbin/start-dfs.sh
 ```
+
+## 启动zookeeper
+
+进入每台服务器的zookepper根目录，运行命令，启动每台机器上的zookeeper
+
+```
+bin/zkServer.sh start
+```
