@@ -2,13 +2,15 @@ version: "3"
 
 services:
   namenode:
-    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
+    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed:zookeeper
     networks:
       hdfs:
         ipv4_address: 172.19.0.2
     container_name: namenode
     environment:
-      - CLUSTER_NAME=test
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888 server.2=datanode1:2888:3888 server.3=datanode2:2888:3888 server.4=datanode3:2888:3888
+      CLUSTER_NAME: test
     ports:
       - "50070:50070"
       - "8088:8088"
@@ -21,11 +23,15 @@ services:
 
 
   datanode1:
-    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
+    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed:zookeeper
     networks:
       hdfs:
         ipv4_address: 172.19.0.3
     container_name: datanode1
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=namenode:2888:3888 server.2=0.0.0.0:2888:3888 server.3=datanode2:2888:3888 server.4=datanode3:2888:3888
+      CLUSTER_NAME: test
     depends_on:
       - namenode
     hostname: datanode1
@@ -36,11 +42,15 @@ services:
       - "datenode3:172.19.0.5"
 
   datanode2:
-    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
+    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed:zookeeper
     networks:
       hdfs:
         ipv4_address: 172.19.0.4
     container_name: datanode2
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=namenode:2888:3888 server.2=datanode1:2888:3888 server.3=0.0.0.0:2888:3888 server.4=datanode3:2888:3888
+      CLUSTER_NAME: test
     depends_on:
       - namenode
     hostname: datanode2
@@ -51,11 +61,15 @@ services:
       - "datenode3:172.19.0.5"
 
   datanode3:
-    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed
+    image: registry.cn-hangzhou.aliyuncs.com/codeboytj/hadoop-fully-distributed:zookeeper
     networks:
       hdfs:
         ipv4_address: 172.19.0.5
     container_name: datanode3
+    environment:
+      ZOO_MY_ID: 4
+      ZOO_SERVERS: server.1=namenode:2888:3888 server.2=datanode1:2888:3888 server.3=datanode2:2888:3888 server.4=0.0.0.0:2888:3888
+      CLUSTER_NAME: test
     depends_on:
       - namenode
     hostname: datanode3
